@@ -44,6 +44,15 @@ export default function Navbar() {
               </Link>
             </nav>
           </div>
+          <div className="flex md:hidden ml-1">
+            <Link href="/" className="mr-6 flex items-center space-x-1">
+              <ShoppingCart className="h-6 w-6" />
+              <div className="flex flex-col items-center">
+                <span className="font-bold text-xs p-0 m-0">Mini</span>
+                <span className="font-bold text-xs p-0 m-0">Shop</span>
+              </div>
+            </Link>
+          </div>
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
             <div className="w-full flex-1 md:w-auto md:flex-none">
               <div className="relative">
