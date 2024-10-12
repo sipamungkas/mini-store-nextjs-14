@@ -24,8 +24,8 @@ const featuredProducts = [
 ];
 export default function FeaturedCarousel() {
   return (
-    <section className="py-12 bg-gray-100">
-      <div className="container mx-auto px-4">
+    <section className="py-1 md:py-12 bg-gray-100">
+      <div className="container mx-auto px-1  md:px-4">
         <Carousel
           opts={{
             align: "start",
@@ -38,12 +38,13 @@ export default function FeaturedCarousel() {
               stopOnFocusIn: true,
             }),
           ]}
-          className="w-full max-w-4xl mx-auto"
+          className="w-full  mx-auto"
         >
           <CarouselContent>
             {featuredProducts.map((product) => (
               <CarouselItem key={product.id}>
-                <div className="relative aspect-video">
+                {/* aspect ration image 4/1 width: 1024 height: 302 */}
+                <div className="relative aspect-[4/1]">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -58,8 +59,8 @@ export default function FeaturedCarousel() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="hidden md:block" />
+          <CarouselNext className="hidden md:block " />
         </Carousel>
       </div>
     </section>
