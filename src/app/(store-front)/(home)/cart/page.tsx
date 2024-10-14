@@ -188,7 +188,7 @@ export default function CartPage() {
                     <span>Shipping</span>
                     <span>
                       {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
-                    </span>
+                    </span> disable shipping for the current time
                   </div> */}
                   <Separator />
                   <div className="flex justify-between font-semibold">
