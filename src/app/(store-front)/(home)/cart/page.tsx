@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
 
 interface CartItem {
   id: number;
@@ -54,6 +55,8 @@ export default function CartPage() {
     },
   ]);
   const [couponCode, setCouponCode] = useState("");
+
+  const router = useRouter();
 
   const updateQuantity = (id: number, change: number) => {
     setCartItems((items) =>
@@ -212,7 +215,11 @@ export default function CartPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" size="lg">
+                <Button
+                  className="w-full"
+                  size="lg"
+                  onClick={() => router.push("/checkout")}
+                >
                   Proceed to Checkout
                 </Button>
               </CardFooter>
