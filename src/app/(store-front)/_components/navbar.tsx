@@ -24,20 +24,20 @@ export default function Navbar() {
               </span>
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
-              <Link href="/" className="transition-colors hover:text-primary">
+              <Link href="/" className="transition-colors hover:text-primary flex items-center">
                 <Home className="h-4 w-4 mr-2 inline-block" />
                 Home
               </Link>
               <Link
                 href="/contact"
-                className="transition-colors hover:text-primary"
+                className="transition-colors hover:text-primary flex items-center"
               >
                 <Phone className="h-4 w-4 mr-2 inline-block" />
                 Contact
               </Link>
               <Link
                 href="/about"
-                className="transition-colors hover:text-primary"
+                className="transition-colors hover:text-primary flex items-center"
               >
                 <Info className="h-4 w-4 mr-2 inline-block" />
                 About
