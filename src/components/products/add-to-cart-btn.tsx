@@ -9,7 +9,7 @@ export const AddToCartBtn = ({ id }: { id: string }) => {
       onClick={() => {
         console.log({ id });
       }}
-      className="w-full"
+      className="w-full xl:w-auto"
     >
       <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
     </Button>
