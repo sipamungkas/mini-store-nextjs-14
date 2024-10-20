@@ -1,8 +1,19 @@
 import ProductItem from "@/components/products/product-item";
 
 const products = [
-  { id: "1", name: "Casual ShirtCasual ShirtCasual ShirtCasual Shirt", price: 34.99, image: "/trendy-tshirt.png" },
-  { id: "2", name: "Elegant Dress", price: 89.99, image: "/stylish-jean.png" },
+  {
+    id: "1",
+    name: "Casual ShirtCasual ShirtCasual ShirtCasual Shirt",
+    price: 34.99,
+    image: "/trendy-tshirt.png",
+  },
+  {
+    id: "2",
+    name: "Elegant Dress",
+    price: 89.99,
+    category: "Dress",
+    image: "/stylish-jean.png",
+  },
   {
     id: "3",
     name: "Comfortable Pants",
@@ -37,6 +48,7 @@ export default function Products() {
               id={product.id}
               image={product.image}
               price={product.price}
+              category={product.category}
             />
           ))}
         </div>
