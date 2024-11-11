@@ -1,9 +1,19 @@
+import { LogoutMenu } from "@/components/auth/logout-menu";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Heart,
   Home,
   Info,
+  LayoutDashboard,
   Phone,
   Search,
   ShoppingCart,
@@ -24,7 +34,10 @@ export default function Navbar() {
               </span>
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
-              <Link href="/" className="transition-colors hover:text-primary flex items-center">
+              <Link
+                href="/"
+                className="transition-colors hover:text-primary flex items-center"
+              >
                 <Home className="h-4 w-4 mr-2 inline-block" />
                 Home
               </Link>
@@ -80,7 +93,7 @@ export default function Navbar() {
                 </Button>
               </Link>
               {/* <ThemeSwitch /> */}
-              <Link
+              {/* <Link
                 href="/dashboard"
                 className="transition-colors hover:text-primary"
               >
@@ -88,7 +101,31 @@ export default function Navbar() {
                   <User className="h-5 w-5" />
                   <span className="sr-only">Profile</span>
                 </Button>
-              </Link>
+              </Link> */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                    <span className="sr-only">User menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <Link href="/dashboard">
+                    <DropdownMenuItem className="cursor-pointer">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuItem className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <LogoutMenu />
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
           </div>
         </div>
