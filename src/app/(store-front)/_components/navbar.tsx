@@ -81,7 +81,7 @@ export default function Navbar() {
               </Link>
               {/* <ThemeSwitch /> */}
               <Link
-                href="/profile"
+                href="/dashboard"
                 className="transition-colors hover:text-primary"
               >
                 <Button variant="ghost" size="icon">
