@@ -128,7 +128,17 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center">
-          <p>&copy; 2024 Your Ecommerce Store. All rights reserved.</p>
+          <p>
+            &copy; 2024 Mini Store by{" "}
+            <Link
+              className="font-bold"
+              href="https://sipamungkas.com"
+              target="_blank"
+            >
+              Sipamungkas
+            </Link>
+            . All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
