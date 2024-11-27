@@ -68,12 +68,18 @@ export interface ProductItem {
   price: number;
   quantity: number;
   isSale: boolean;
+  isFeatured: boolean | null;
   salePrice: number;
   slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
   images: ProductImage[];
+  category: {
+    id: number;
+    documentId: string;
+    name: string;
+  };
 }
 
 export interface ProductApiResponse {
