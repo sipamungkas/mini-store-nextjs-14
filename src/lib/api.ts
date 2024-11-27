@@ -1,6 +1,8 @@
+import { redirect } from "next/navigation";
 import {
   HomeSliderApiResponse,
   ProductApiResponse,
+  ProductDetailApiResponse,
 } from "../../types/response";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -33,6 +35,21 @@ export const getProducts = async (
       },
     }
   );
+
+  return response.json();
+};
+
+export const getProductBySlug = async (
+  slug: string
+): Promise<ProductDetailApiResponse> => {
+  const response = await fetch(`${BASE_URL}/products/${slug}`, {
+    headers: {
+      ...(BEARER_TOKEN && { Authorization: BEARER_TOKEN }),
+    },
+  });
+  if (response.status === 404) {
+    redirect("/404");
+  }
 
   return response.json();
 };

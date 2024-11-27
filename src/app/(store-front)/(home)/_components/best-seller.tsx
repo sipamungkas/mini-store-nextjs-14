@@ -1,5 +1,5 @@
 import ProductItem from "@/components/products/product-item";
-import { getProducts } from "@/lib/network";
+import { getProducts } from "@/lib/api";
 
 export default async function BestSellerProducts() {
   const res = await getProducts(4, 1, true);

@@ -25,7 +25,7 @@ const ProductItem = ({
   category,
 }: IProduct) => {
   return (
-    <Link href={`products/${slug}`} className=" flex flex-1">
+    <Link href={`/products/${slug}`} className=" flex flex-1">
       <Card>
         <CardContent className="p-2 md:p-4 flex flex-col h-full">
           <div className="w-full min-w-[250px] object-cover mb-4 rounded-md aspect-square">
