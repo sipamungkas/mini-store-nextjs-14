@@ -3,12 +3,13 @@ import Link from "next/link";
 import { Card, CardContent } from "../ui/card";
 
 import { AddToCartBtn } from "./add-to-cart-btn";
+import { ASSETS_URL } from "@/lib/const";
 
 interface IProduct {
   image: string;
   name: string;
   price: number;
-  id: string;
+  id: string | number;
   salePrice?: number;
   category?: string;
 }
@@ -22,11 +23,11 @@ const ProductItem = ({
   category,
 }: IProduct) => {
   return (
-    <Link href="products/name" className=" flex flex-1" >
+    <Link href="products/name" className=" flex flex-1">
       <Card>
         <CardContent className="p-2 md:p-4 flex flex-col h-full">
           <Image
-            src={image}
+            src={`${ASSETS_URL}/${image}`}
             alt={name}
             width={300}
             height={300}

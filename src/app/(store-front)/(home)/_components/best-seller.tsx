@@ -17,7 +17,7 @@ const bestSellers = [
   },
 ];
 
-export default function BestSellerProducts() {
+export default async function BestSellerProducts() {
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
