@@ -17,6 +17,7 @@ import {
   Phone,
   Search,
   ShoppingCart,
+  Store,
   User,
 } from "lucide-react";
 import Link from "next/link";
@@ -40,6 +41,13 @@ export default function Navbar() {
               >
                 <Home className="h-4 w-4 mr-2 inline-block" />
                 Home
+              </Link>
+              <Link
+                href="/products"
+                className="transition-colors hover:text-primary flex items-center"
+              >
+                <Store className="h-4 w-4 mr-2 inline-block" />
+                Products
               </Link>
               <Link
                 href="/contact"
