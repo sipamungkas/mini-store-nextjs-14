@@ -21,18 +21,18 @@ export const getHomeSliders = async (): Promise<HomeSliderApiResponse> => {
 export const getProducts = async (
   pageSize: number = 10,
   page: number = 1,
-  timeout: number = 3000
+  showFeatured: boolean = false
 ): Promise<ProductApiResponse> => {
   const response = await fetch(
-    `${BASE_URL}/products?pagination[pageSize]=${pageSize}&pagination[page]=${page}&status=published&populate[images][fields][0]=url&populate[images][fields][1]=name`,
+    `${BASE_URL}/products?pagination[pageSize]=${pageSize}&pagination[page]=${page}&status=published&populate[images][fields][0]=url&populate[images][fields][1]=name&sort=createdAt:desc&populate[category][fields][0]=name${
+      showFeatured ? "&filters[isFeatured][$eq]=true" : ""
+    }`,
     {
       headers: {
         ...(BEARER_TOKEN && { Authorization: BEARER_TOKEN }),
       },
     }
   );
-
-  await new Promise((resolve) => setTimeout(resolve, timeout));
 
   return response.json();
 };

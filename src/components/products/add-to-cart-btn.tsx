@@ -3,7 +3,7 @@
 import { ShoppingCart } from "lucide-react";
 import { Button } from "../ui/button";
 
-export const AddToCartBtn = ({ id }: { id: string }) => {
+export const AddToCartBtn = ({ id }: { id: string | number }) => {
   return (
     <Button
       onClick={() => {

@@ -1,35 +1,24 @@
 import ProductItem from "@/components/products/product-item";
-
-const bestSellers = [
-  {
-    id: "1",
-    name: "Trendy T-Shirt",
-    price: 29.99,
-    image: "/trendy-tshirt.png",
-  },
-  { id: "2", name: "Stylish Jeans", price: 59.99, image: "/stylish-jean.png" },
-  { id: "3", name: "Cozy Sweater", price: 49.99, image: "/cozy-sweater.png" },
-  {
-    id: "4",
-    name: "Classic Sneakers",
-    price: 79.99,
-    image: "/classic-sneaker.jpg",
-  },
-];
+import { getProducts } from "@/lib/network";
 
 export default async function BestSellerProducts() {
+  const res = await getProducts(4, 1, true);
+
   return (
     <section className="py-12">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8">Best Sellers</h2>
+        <h2 className="text-3xl font-bold mb-8">Featured Product</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6">
-          {bestSellers.map((product) => (
+          {res.data.map((product) => (
             <ProductItem
               key={product.id}
               name={product.name}
+              slug={product.slug}
               id={product.id}
-              image={product.image}
+              image={product.images[0].url}
               price={product.price}
+              salePrice={product.salePrice}
+              category={product.category.name}
             />
           ))}
         </div>

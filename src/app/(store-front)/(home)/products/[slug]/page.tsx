@@ -136,11 +136,11 @@ export default function ProductDetails() {
           </div>
           {/* Thumbnails */}
           <div className="overflow-hidden" ref={thumbsRef}>
-            <div className="flex -ml-2">
+            <div className="flex">
               {images.map((src, index) => (
                 <button
                   key={index}
-                  className={`relative aspect-square min-w-0 flex-[0_0_25%] cursor-pointer overflow-hidden rounded p-2 ${
+                  className={`relative aspect-square min-w-0 flex-[0_0_30%] cursor-pointer overflow-hidden rounded p-2 ${
                     index === selectedIndex
                       ? "ring-1 ring-primary scale-95"
                       : ""

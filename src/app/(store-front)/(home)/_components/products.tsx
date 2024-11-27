@@ -1,41 +1,6 @@
 import ProductItem from "@/components/products/product-item";
 import { getProducts } from "@/lib/network";
 
-const products = [
-  {
-    id: "1",
-    name: "Casual ShirtCasual ShirtCasual ShirtCasual Shirt",
-    price: 34.99,
-    image: "/trendy-tshirt.png",
-  },
-  {
-    id: "2",
-    name: "Elegant Dress",
-    price: 89.99,
-    category: "Dress",
-    image: "/stylish-jean.png",
-  },
-  {
-    id: "3",
-    name: "Comfortable Pants",
-    price: 54.99,
-    image: "/cozy-sweater.png",
-  },
-  {
-    id: "4",
-    name: "Sporty Jacket",
-    price: 99.99,
-    image: "/classic-sneaker.jpg",
-  },
-  {
-    id: "5",
-    name: "Leather Boots",
-    price: 129.99,
-    image: "/trendy-tshirt.png",
-  },
-  { id: "6", name: "Casual Cap", price: 24.99, image: "/stylish-jean.png" },
-];
-
 export default async function Products() {
   const res = await getProducts();
   return (
@@ -51,7 +16,8 @@ export default async function Products() {
               image={product.images[0].url}
               price={product.price}
               salePrice={product.salePrice}
-              // category={product.}
+              slug={product.slug}
+              category={product.category.name}
             />
           ))}
         </div>

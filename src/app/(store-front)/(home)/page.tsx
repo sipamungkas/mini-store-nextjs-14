@@ -10,7 +10,7 @@ export default function Home() {
     <main>
       <FeaturedCarousel />
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<ProductSkeleton />}>
         <BestSellerProducts />
       </Suspense>
       <Suspense fallback={<ProductSkeleton />}>

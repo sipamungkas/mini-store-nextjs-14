@@ -10,6 +10,7 @@ interface IProduct {
   name: string;
   price: number;
   id: string | number;
+  slug: string;
   salePrice?: number;
   category?: string;
 }
@@ -18,21 +19,26 @@ const ProductItem = ({
   id,
   image,
   name,
+  slug,
   price,
   salePrice,
   category,
 }: IProduct) => {
   return (
-    <Link href="products/name" className=" flex flex-1">
+    <Link href={`products/${slug}`} className=" flex flex-1">
       <Card>
         <CardContent className="p-2 md:p-4 flex flex-col h-full">
-          <Image
-            src={`${ASSETS_URL}/${image}`}
-            alt={name}
-            width={300}
-            height={300}
-            className="w-full object-cover mb-4 rounded-md aspect-square"
-          />
+          <div className="w-full min-w-[250px] object-cover mb-4 rounded-md aspect-square">
+            <Image
+              defaultValue={"/trendy-tshirt.png"}
+              src={`${ASSETS_URL}/${image}`}
+              alt={name}
+              width={300}
+              height={300}
+              className="w-full object-cover mb-4 rounded-md aspect-square"
+            />
+          </div>
+
           <h3 className="font-semibold mb-1 md:mb-2 line-clamp-2 flex-grow">
             {name}
           </h3>
