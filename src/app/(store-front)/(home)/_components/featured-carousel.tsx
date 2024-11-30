@@ -22,7 +22,7 @@ export default function FeaturedCarousel() {
   const getData = async () => {
     setIsLoading(true);
     const data = await getHomeSliders();
-    setFeaturedProducts(data.data);
+    setFeaturedProducts(data?.data || []);
     setIsLoading(false);
   };
 
@@ -55,8 +55,8 @@ export default function FeaturedCarousel() {
                   {/* aspect ration image 4/1 width: 1024 height: 302 */}
                   <div className="relative aspect-[4/1]">
                     <Image
-                      src={`${ASSETS_URL}/${product.image.formats.large.url}`}
-                      alt={product.image.formats.large.name}
+                      src={`${ASSETS_URL}/${product.image.formats.large?.url || product.image.url}`}
+                      alt={product.image.formats.large?.name || product.image.formats.small?.name}
                       layout="fill"
                       objectFit="cover"
                       className="rounded-lg"
