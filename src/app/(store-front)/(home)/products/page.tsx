@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DualRangeSlider } from "@/components/ui/dual-range-slider";
 
 interface Product {
   id: number;
@@ -194,7 +194,8 @@ export default function ProductList() {
             </div>
             <div>
               <Label htmlFor="price-range">Price Range</Label>
-              <Slider
+
+              <DualRangeSlider
                 id="price-range"
                 min={0}
                 max={300}
