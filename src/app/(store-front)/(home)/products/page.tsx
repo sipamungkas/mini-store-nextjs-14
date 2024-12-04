@@ -1,20 +1,7 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DualRangeSlider } from "@/components/ui/dual-range-slider";
+import Filters from "./_components/filters";
 
 interface Product {
   id: number;
@@ -93,147 +80,24 @@ const products: Product[] = [
   // Add more products as needed
 ];
 
-export default function ProductList() {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [priceRange, setPriceRange] = useState([0, 300]);
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [onSaleOnly, setOnSaleOnly] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 6;
-
-  const categories = [
-    "All",
-    ...new Set(products.map((product) => product.category)),
-  ];
-
-  useEffect(() => {
-    let result = products;
-
-    // Search filter
-    if (searchTerm) {
-      result = result.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    // Category filter
-    if (selectedCategory !== "All") {
-      result = result.filter(
-        (product) => product.category === selectedCategory
-      );
-    }
-
-    // Price range filter
-    result = result.filter(
-      (product) =>
-        product.price >= priceRange[0] && product.price <= priceRange[1]
-    );
-
-    // On sale filter
-    if (onSaleOnly) {
-      result = result.filter((product) => product.salePrice !== null);
-    }
-
-    // Sort by price
-    result.sort((a, b) => {
-      const priceA = a.salePrice || a.price;
-      const priceB = b.salePrice || b.price;
-      return sortOrder === "asc" ? priceA - priceB : priceB - priceA;
-    });
-
-    setFilteredProducts(result);
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategory, priceRange, sortOrder, onSaleOnly]);
-
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
+export default async function ProductList({
+  searchParams,
+}: {
+  searchParams: unknown;
+}) {
+  console.log({ searchParams });
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-3xl font-bold">Product List</h1>
 
       <div className="flex flex-col md:flex-row">
         {/* Filters - Left Side */}
-        <div className="mb-8 md:mb-0 md:mr-8 md:w-1/4">
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="search">Search</Label>
-              <Input
-                id="search"
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="category">Category</Label>
-              <Select
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <SelectTrigger id="category">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="price-range">Price Range</Label>
-
-              <DualRangeSlider
-                id="price-range"
-                min={0}
-                max={300}
-                step={10}
-                value={priceRange}
-                onValueChange={setPriceRange}
-              />
-              <div className="mt-2 text-sm">
-                ${priceRange[0]} - ${priceRange[1]}
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="sort">Sort by Price</Label>
-              <Select value={sortOrder} onValueChange={setSortOrder}>
-                <SelectTrigger id="sort">
-                  <SelectValue placeholder="Sort order" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="asc">Low to High</SelectItem>
-                  <SelectItem value="desc">High to Low</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="on-sale"
-                checked={onSaleOnly}
-                onCheckedChange={setOnSaleOnly}
-              />
-              <Label htmlFor="on-sale">Show only items on sale</Label>
-            </div>
-          </div>
-        </div>
+        <Filters />
 
         {/* Product Grid - Right Side */}
         <div className="md:w-3/4">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {currentProducts.map((product) => (
+            {products.map((product) => (
               <Card key={product.id}>
                 <CardContent className="p-4">
                   <img
@@ -271,30 +135,31 @@ export default function ProductList() {
           <div className="mt-8 flex justify-center space-x-2">
             <Button
               variant="outline"
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
+              // onClick={() => paginate(currentPage - 1)}
+              // disabled={currentPage === 1}
             >
               <ChevronLeft className="h-4 w-4" />
               Previous
             </Button>
             {Array.from({
-              length: Math.ceil(filteredProducts.length / productsPerPage),
+              length: 6,
             }).map((_, index) => (
               <Button
                 key={index}
-                variant={currentPage === index + 1 ? "default" : "outline"}
-                onClick={() => paginate(index + 1)}
+                variant="outline"
+                // variant={currentPage === index + 1 ? "default" : "outline"}
+                // onClick={() => paginate(index + 1)}
               >
                 {index + 1}
               </Button>
             ))}
             <Button
               variant="outline"
-              onClick={() => paginate(currentPage + 1)}
-              disabled={
-                currentPage ===
-                Math.ceil(filteredProducts.length / productsPerPage)
-              }
+              // onClick={() => paginate(currentPage + 1)}
+              // disabled={
+              //   currentPage ===
+              //   Math.ceil(filteredProducts.length / productsPerPage)
+              // }
             >
               Next
               <ChevronRight className="h-4 w-4" />

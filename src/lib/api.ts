@@ -23,18 +23,34 @@ export const getHomeSliders = async (): Promise<HomeSliderApiResponse> => {
 export const getProducts = async (
   pageSize: number = 10,
   page: number = 1,
-  showFeatured: boolean = false
+  showFeatured?: boolean | undefined,
+  minPrice?: number | undefined,
+  maxPrice?: number | undefined,
+  sort?: string[],
+  categoryId?: string
 ): Promise<ProductApiResponse> => {
-  const response = await fetch(
-    `${BASE_URL}/products?pagination[pageSize]=${pageSize}&pagination[page]=${page}&status=published&populate[images][fields][0]=url&populate[images][fields][1]=name&sort=createdAt:desc&populate[category][fields][0]=name${
-      showFeatured ? "&filters[isFeatured][$eq]=true" : ""
-    }`,
-    {
-      headers: {
-        ...(BEARER_TOKEN && { Authorization: BEARER_TOKEN }),
-      },
-    }
-  );
+  let url = `${BASE_URL}/products?pagination[pageSize]=${pageSize}&pagination[page]=${page}&status=published&populate[images][fields][0]=url&populate[images][fields][1]=name&sort=createdAt:desc&populate[category][fields][0]=name`;
+
+  if (showFeatured !== undefined) {
+    url = url + `&filters[isFeatured][$eq]=${showFeatured}`;
+  }
+  if (minPrice !== undefined) {
+    url = url + `filters[price][$gte]=${minPrice}`;
+  }
+
+  if (maxPrice !== undefined) {
+    url = url + `filters[price][$lte]=${maxPrice}`;
+  }
+
+  if (categoryId !== undefined) {
+    url = url + `filters[category][id][$eq]=${categoryId}`;
+  }
+
+  const response = await fetch(url, {
+    headers: {
+      ...(BEARER_TOKEN && { Authorization: BEARER_TOKEN }),
+    },
+  });
 
   return response.json();
 };
