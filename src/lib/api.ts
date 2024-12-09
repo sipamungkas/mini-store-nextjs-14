@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import {
+  CategoryApiResponse,
   HomeSliderApiResponse,
   ProductApiResponse,
   ProductDetailApiResponse,
@@ -65,6 +66,29 @@ export const getProductBySlug = async (
   });
   if (response.status === 404) {
     redirect("/404");
+  }
+
+  return response.json();
+};
+
+export const getCategories = async (): Promise<CategoryApiResponse> => {
+  const response = await fetch(`${BASE_URL}/categories`, {
+    headers: {
+      ...(BEARER_TOKEN && { Authorization: BEARER_TOKEN }),
+    },
+  });
+  if (response.status === 404) {
+    return {
+      data: [],
+      meta: {
+        pagination: {
+          page: 1,
+          pageCount: 0,
+          pageSize: 10,
+          total: 0,
+        },
+      },
+    };
   }
 
   return response.json();

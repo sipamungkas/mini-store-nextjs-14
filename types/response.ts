@@ -141,3 +141,17 @@ export interface ProductDetailApiResponse {
   data: ProductDetail;
   meta: Meta;
 }
+
+export interface CategoryData {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
+  publishedAt: string; // ISO date string
+}
+export interface CategoryApiResponse {
+  data: CategoryData[];
+  meta: Meta;
+}

@@ -12,23 +12,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { goToUrl } from "./actions";
-
-const categories = ["All", "Shoes", "Accessories", "Clothes"];
+import { CategoryData } from "../../../../../../types/response";
+import { getCategories } from "@/lib/api";
 
 const Filters = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 300]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [onSaleOnly, setOnSaleOnly] = useState(false);
 
+  const getData = async () => {
+    setIsLoading(true);
+    const data = await getCategories();
+    setCategories(data?.data || []);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   //   const base_url = window.location.origin;
 
   const onApplyClick = async () => {
     // let url = `${base_url}/${pathname}?`;
-    await goToUrl(priceRange, categories, onSaleOnly);
+    await goToUrl(priceRange, selectedCategory, onSaleOnly);
   };
 
   const onResetClick = async () => {
@@ -55,11 +68,13 @@ const Filters = () => {
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {categories.map((category) => (
-                <SelectItem key={category} value={category}>
-                  {category}
-                </SelectItem>
-              ))}
+              {isLoading && <Spinn}
+              {!isLoading &&
+                categories.map((category) => (
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>

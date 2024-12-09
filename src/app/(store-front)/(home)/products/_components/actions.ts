@@ -4,14 +4,14 @@ import { redirect } from "next/navigation";
 
 export const goToUrl = (
   priceRange?: number[],
-  categories?: string[],
+  category?: string,
   onSaleOnly?: boolean
 ) => {
   let url = "products?";
-  if (priceRange || categories || onSaleOnly) {
+  if (priceRange || category || onSaleOnly) {
     url = `${url}minPrice=${priceRange![0]}&maxPrice=${
       priceRange![1]
-    }&category=${categories![0]}&onSaleOnly=${onSaleOnly}`;
+    }&category=${category}&onSaleOnly=${onSaleOnly}`;
   }
 
   // router.push(url);

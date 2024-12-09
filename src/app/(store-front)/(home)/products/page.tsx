@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Filters from "./_components/filters";
+import { getProducts } from "@/lib/api";
 
 interface Product {
   id: number;
@@ -85,7 +86,9 @@ export default async function ProductList({
 }: {
   searchParams: unknown;
 }) {
-  console.log({ searchParams });
+
+  const res = await getProducts(searchParams.)
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-3xl font-bold">Product List</h1>
