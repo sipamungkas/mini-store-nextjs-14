@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Filters from "./_components/filters";
 import { getProducts } from "@/lib/api";
 import ProductItem from "@/components/products/product-item";
+import { Pagination } from "./_components/pagination";
 
 interface SearchParams {
   pageSize?: number;
@@ -19,6 +18,7 @@ export default async function ProductList({
 }: {
   searchParams: SearchParams;
 }) {
+  console.log({ searchParams });
   const res = await getProducts({
     pageSize: searchParams.pageSize || 10,
     page: searchParams.page || 1,
@@ -37,6 +37,13 @@ export default async function ProductList({
 
         {/* Product Grid - Right Side */}
         <div className="md:w-3/4">
+          {res.data.length === 0 && (
+            // <div className="flex flex-1 justify-center-center ">
+            <p className="text-lg text-center mt-10 mb-10 text-gray-900/90 m-auto">
+              No products found
+            </p>
+            // </div>
+          )}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {res.data.map((product) => (
               <ProductItem
@@ -53,39 +60,12 @@ export default async function ProductList({
           </div>
 
           {/* Pagination */}
-          <div className="mt-8 flex justify-center space-x-2">
-            <Button
-              variant="outline"
-              // onClick={() => paginate(currentPage - 1)}
-              // disabled={currentPage === 1}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
-            {Array.from({
-              length: res.meta.pagination.pageCount,
-            }).map((_, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                // variant={currentPage === index + 1 ? "default" : "outline"}
-                // onClick={() => paginate(index + 1)}
-              >
-                {index + 1}
-              </Button>
-            ))}
-            <Button
-              variant="outline"
-              // onClick={() => paginate(currentPage + 1)}
-              // disabled={
-              //   currentPage ===
-              //   Math.ceil(filteredProducts.length / productsPerPage)
-              // }
-            >
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
+          {res.data.length > 0 && (
+            <Pagination
+              pageCount={res.meta.pagination.pageCount}
+              currentPage={res.meta.pagination.page}
+            />
+          )}
         </div>
       </div>
     </div>

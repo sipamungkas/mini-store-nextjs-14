@@ -60,7 +60,12 @@ const Filters = () => {
   }, []);
 
   const onApplyClick = async () => {
-    await goToUrl(priceRange, selectedCategory, onSaleOnly);
+    await goToUrl(
+      priceRange,
+      selectedCategory,
+      onSaleOnly,
+      Number(params.get("page"))
+    );
   };
 
   const onResetClick = async () => {

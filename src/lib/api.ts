@@ -60,7 +60,7 @@ export const getProducts = async ({
     if (showFeatured !== undefined) {
       url = url + `&filters[isFeatured][$eq]=${showFeatured}`;
     }
-    if (minPrice !== undefined) {
+    if (Number(minPrice)) {
       url = url + `&filters[price][$gte]=${minPrice}`;
     }
 
