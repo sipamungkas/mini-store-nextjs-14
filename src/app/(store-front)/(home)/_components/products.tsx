@@ -2,7 +2,7 @@ import ProductItem from "@/components/products/product-item";
 import { getProducts } from "@/lib/api";
 
 export default async function Products() {
-  const res = await getProducts();
+  const res = await getProducts({ page: 1, pageSize: 4 });
   return (
     <section className="py-12 bg-gray-100">
       <div className="container mx-auto px-4">

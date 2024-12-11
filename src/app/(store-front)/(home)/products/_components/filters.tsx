@@ -16,20 +16,42 @@ import React, { useEffect, useState } from "react";
 import { goToUrl } from "./actions";
 import { CategoryData } from "../../../../../../types/response";
 import { getCategories } from "@/lib/api";
+import { Spinner } from "@/components/ui/spinner";
+import { useSearchParams } from "next/navigation";
+
+const defaultCategories: CategoryData[] = [
+  {
+    id: 0,
+    name: "Select category",
+    slug: "",
+    createdAt: "",
+    updatedAt: "",
+    documentId: "",
+    publishedAt: "",
+  },
+];
 
 const Filters = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const params = useSearchParams();
+
+  const [searchTerm, setSearchTerm] = useState(params.get("search") || "");
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [priceRange, setPriceRange] = useState([0, 300]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    params.get("category") || ""
+  );
+  const [priceRange, setPriceRange] = useState([
+    Number(params.get("minPrice")) || 0,
+    Number(params.get("maxPrice")) || 1000,
+  ]);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [onSaleOnly, setOnSaleOnly] = useState(false);
-
+  const [onSaleOnly, setOnSaleOnly] = useState(
+    params.get("onSaleOnly") === "true"
+  );
   const getData = async () => {
     setIsLoading(true);
     const data = await getCategories();
-    setCategories(data?.data || []);
+    setCategories([...defaultCategories, ...data?.data]);
     setIsLoading(false);
   };
 
@@ -37,10 +59,7 @@ const Filters = () => {
     getData();
   }, []);
 
-  //   const base_url = window.location.origin;
-
   const onApplyClick = async () => {
-    // let url = `${base_url}/${pathname}?`;
     await goToUrl(priceRange, selectedCategory, onSaleOnly);
   };
 
@@ -68,10 +87,10 @@ const Filters = () => {
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {isLoading && <Spinn}
+              {isLoading && <Spinner />}
               {!isLoading &&
                 categories.map((category) => (
-                  <SelectItem key={category.id} value={category.name}>
+                  <SelectItem key={category.id} value={category.id.toString()}>
                     {category.name}
                   </SelectItem>
                 ))}
@@ -84,7 +103,7 @@ const Filters = () => {
           <DualRangeSlider
             id="price-range"
             min={0}
-            max={300}
+            max={1000}
             step={10}
             value={priceRange}
             onValueChange={setPriceRange}
